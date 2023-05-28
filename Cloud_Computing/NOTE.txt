@@ -12,13 +12,13 @@ npm install
 Ada 2 file yang harus diupload sendiri
 File serviceAccountnya upload di folder Cloud Computing (root)
 File firebase-config upload di src\utils
---ka dimasukkin ke github karena private--
+--ga dimasukkin ke github karena private--
 
 Kalo mau run tinggal 'npm start'
 Semoga gada error T^T
 
 Untuk endpointnya:
-/auth/register
-/auth/login
+/auth/register -> body: name, email, password
+/auth/login -> body: email, password
 /auth/logout
 --nanti kukirim juga file postman supaya tinggal pake--
