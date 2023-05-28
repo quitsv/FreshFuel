@@ -1,0 +1,24 @@
+Hai, silahkan dibaca sefruit notes dibawah ini ya
+Authentikasi kita make Firebase Authentication terus data usernya disimpen di realtime database milik Firebase
+Silahkan ikuti langkah-langkah di bawah ini
+
+Clone dulu repositorynya
+ke direktori Cloud Computing
+
+Jalanin di terminal:
+npm init
+npm install
+
+Ada 2 file yang harus diupload sendiri
+File serviceAccountnya upload di folder Cloud Computing (root)
+File firebase-config upload di src\utils
+--ka dimasukkin ke github karena private--
+
+Kalo mau run tinggal 'npm start'
+Semoga gada error T^T
+
+Untuk endpointnya:
+/auth/register
+/auth/login
+/auth/logout
+--nanti kukirim juga file postman supaya tinggal pake--
