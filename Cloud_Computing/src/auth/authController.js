@@ -9,7 +9,7 @@ const ref = db.ref('/user');
 // Register a new user
 exports.registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, allergies } = req.body;
 
     // Create a new user in Firebase Authentication
     await firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -19,6 +19,7 @@ exports.registerUser = async (req, res) => {
     await newUserRef.set({
       name: name,
       email: email,
+      allergies: allergies
     });
 
     res.status(201).json({ message: 'User registered successfully' });
