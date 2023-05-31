@@ -22,7 +22,7 @@ exports.registerUser = async (req, res) => {
       allergies: allergies
     });
 
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: 'User registered successfully', error: null });
   } catch (error) {
     res.status(500).json({ message: 'Failed to register user', error: error.message });
   }
@@ -42,7 +42,7 @@ exports.loginUser = async (req, res) => {
     var data = {}
     ref.orderByChild('email').equalTo(emailUser).once('value', (snapshot) => {
       data = Object.values(snapshot.val())[0];
-      res.status(200).json({ message: 'Login successful', accessToken: accessToken, dataUser: data });
+      res.status(200).json({ message: 'Login successful', error: null, accessToken: accessToken, dataUser: data });
     });
 
   } catch (error) {
@@ -56,7 +56,7 @@ exports.logoutUser = async (req, res) => {
     // Sign out the user from Firebase Authentication
     await firebase.auth().signOut();
 
-    res.status(200).json({ message: 'User logged out successfully' });
+    res.status(200).json({ message: 'User logged out successfully', error: null });
   } catch (error) {
     res.status(500).json({ message: 'Failed to log out user', error: error.message });
   }
