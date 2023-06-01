@@ -6,6 +6,8 @@ import com.bangkit.freshfuel.data.Result
 import com.bangkit.freshfuel.data.UserPreference
 import com.bangkit.freshfuel.data.remote.api.ApiService
 import com.bangkit.freshfuel.model.request.LoginRequest
+import com.bangkit.freshfuel.model.request.RegisterRequest
+import com.bangkit.freshfuel.model.response.DefaultResponse
 import com.bangkit.freshfuel.model.response.LoginResponse
 
 class UserRepository(private val preference: UserPreference, private val apiService: ApiService) {
@@ -32,6 +34,30 @@ class UserRepository(private val preference: UserPreference, private val apiServ
             emit(Result.Error(exception.message.toString()))
         }
     }
+
+    suspend fun registerUser(request: RegisterRequest): LiveData<Result<DefaultResponse>> =
+        liveData {
+            try {
+                emit(Result.Loading)
+                val response = apiService.register(request)
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body != null) {
+                        if (body.message == "") {
+                            emit(Result.Error(body.message.toString()))
+                        } else {
+                            emit(Result.Success(body))
+                        }
+                    } else {
+                        emit(Result.Error("Body is null"))
+                    }
+                } else {
+                    emit(Result.Error("Response is not successful"))
+                }
+            } catch (exception: Exception) {
+                emit(Result.Error(exception.message.toString()))
+            }
+        }
 
     companion object {
         @Volatile
