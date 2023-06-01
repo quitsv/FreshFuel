@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="name">name</string>
+    <string name="register">create new account</string>
+    <string name="login">login</string>
+    <string name="loading">loading</string>
+</resources>
