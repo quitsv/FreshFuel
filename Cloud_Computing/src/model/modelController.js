@@ -15,15 +15,24 @@ exports.getRecipe = async (req, res) => {
         res.status(200).json({ message: 'No matching recipe'});
         return;
     }
+    var responseObj = {}
     snapshot.forEach(doc => {
-        var responseObj = {}
+        responseObj["properties"] = {};
+        responseObj["technique"] = {};
+        responseObj["composition"] = {};
         Object.entries(doc.data()).forEach(([key, value]) => { 
-            if (value != 0) {
-                responseObj[key] = value;
+            if (key == "22-minute meals" || key == "3-ingredient recipes" || key == "advance prep required" || key == "alcoholic" || key == "high fiber" || key == "low/no sugar"  || key == "low cholesterol" || key == "quick & easy") {
+                responseObj["properties"][key] = value;
+            } else if (key == "bake" || key == "boil" || key == "braise" || key == "broil" || key == "deep-fry" || key == "double boiler"  || key == "fry" || key == "grill" || key == "roast" || key == "saute" || key == "steam" || key == "stew" || key == "stir-fry") {
+                responseObj["technique"][key] = value;
+            } else{
+                if (value != 0) {
+                    responseObj["composition"][key] = value;
+                }
             }
         })
-        res.status(200).json({ message: 'Get recipe success', error: null, data: responseObj});
     });
+    res.status(200).json({ message: 'Get recipe success', error: null, data: responseObj});
   } catch (error) {
         res.status(500).json({ message: 'Failed to get recipe', error: error.message });
   }
