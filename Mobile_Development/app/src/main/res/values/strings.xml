@@ -62,4 +62,10 @@
     <string name="allergies">Allergies</string>
     <string name="allergies_delete">delete allergy</string>
     <string name="allergy_item_placeholder">Allergy Item</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_food">Foods</string>
 </resources>
