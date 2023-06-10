@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const express = require('express');
 const app = express();
 const authRoutes = require('./src/auth');
+const modelRoutes = require('./src/model');
 
 // Middlewares
 app.use(express.urlencoded({ extended: false }));
@@ -9,6 +10,7 @@ app.use(express.json());
 
 // API routes
 app.use('/auth', authRoutes);
+app.use('/', modelRoutes);
 
 // Default route
 app.get('/', (req, res) => {
