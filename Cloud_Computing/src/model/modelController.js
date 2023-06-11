@@ -12,30 +12,33 @@ exports.getRecipe = async (req, res) => {
     const recipesRef = db.collection('recipes');
     const snapshot = await recipesRef.where('Recipe_Name', '==', recipe).get();
     if (snapshot.empty) {
-        res.status(200).json({ message: 'No matching recipe'});
+        res.status(200).json({ message: 'No matching recipe', error: error.message});
         return;
     }
     var responseObj = {}
     snapshot.forEach(doc => {
+        responseObj["information"] = {};
         responseObj["properties"] = {};
         responseObj["technique"] = {};
-        responseObj["composition"] = {};
+        responseObj["ingredients"] = {};
         Object.entries(doc.data()).forEach(([key, value]) => { 
-            if (key == "22-minute meals" || key == "3-ingredient recipes" || key == "advance prep required" || key == "alcoholic" || key == "high fiber" || key == "low/no sugar"  || key == "low cholesterol" || key == "quick & easy") {
-                responseObj["properties"][key] = value;
-            } else if (key == "bake" || key == "boil" || key == "braise" || key == "broil" || key == "deep-fry" || key == "double boiler"  || key == "fry" || key == "grill" || key == "roast" || key == "saute" || key == "steam" || key == "stew" || key == "stir-fry") {
-                responseObj["technique"][key] = value;
-            } else{
-                if (value != 0) {
-                    responseObj["composition"][key] = value;
+            if (value != 0) {
+                if (key == "Recipe_Name" || key == "rating" || key == "sodium" || key == "protein" || key == "calories" || key == "fat") {
+                    responseObj["information"][key] = value;
+                } else if (key == "22-minute meals" || key == "3-ingredient recipes" || key == "advance prep required" || key == "alcoholic" || key == "high fiber" || key == "low/no sugar"  || key == "low cholesterol" || key == "quick & easy") {
+                    responseObj["properties"][key] = value;
+                } else if (key == "bake" || key == "boil" || key == "braise" || key == "broil" || key == "deep-fry" || key == "double boiler"  || key == "fry" || key == "grill" || key == "roast" || key == "saute" || key == "steam" || key == "stew" || key == "stir-fry") {
+                    responseObj["technique"][key] = value;
+                } else{
+                    responseObj["ingredients"][key] = value;
                 }
             }
         })
     });
-    res.status(200).json({ message: 'Get recipe success', error: null, data: responseObj});
-  } catch (error) {
+        res.status(200).json({ message: 'Get recipe success', error: null, data: responseObj});
+    } catch (error) {
         res.status(500).json({ message: 'Failed to get recipe', error: error.message });
-  }
+    }
 };
 
 exports.predict = async (req, res) => {
