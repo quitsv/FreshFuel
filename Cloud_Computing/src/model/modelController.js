@@ -5,7 +5,7 @@ require('../utils/firebase-config.js');
 
 const db = getFirestore();
 
-// Register a new user
+// Get Detail Recipe
 exports.getRecipe = async (req, res) => {
   try {
     const recipe = req.query.recipeName
@@ -40,6 +40,29 @@ exports.getRecipe = async (req, res) => {
         res.status(500).json({ message: 'Failed to get recipe', error: error.message });
     }
 };
+
+// Get Search Recipe
+exports.search = async (req, res) => {
+    try {
+        const recipeName = req.query.recipeName
+        var listRecipes = [];
+        const recipesRef = db.collection('recipes');
+        const snapshot = await recipesRef.select('Recipe_Name').get();
+        
+        for (const recipe of snapshot.docs) {
+            if(listRecipes.length < 10 ){
+                if (recipe.data()["Recipe_Name"].toLowerCase().includes(recipeName.toLowerCase())){
+                    listRecipes.push(recipe.data()["Recipe_Name"]);
+                }
+            }else{
+                break;
+            }
+        }
+        res.status(200).json({ message: 'Search recipe success', error: null, data: listRecipes});
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to search recipe', error: error.message });
+    }
+  };
 
 exports.predict = async (req, res) => {
     try {
