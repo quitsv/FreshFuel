@@ -5,12 +5,29 @@ import androidx.lifecycle.liveData
 import com.bangkit.freshfuel.data.Result
 import com.bangkit.freshfuel.data.UserPreference
 import com.bangkit.freshfuel.data.remote.api.ApiService
+import com.bangkit.freshfuel.model.LoginData
 import com.bangkit.freshfuel.model.request.LoginRequest
 import com.bangkit.freshfuel.model.request.RegisterRequest
 import com.bangkit.freshfuel.model.response.DefaultResponse
 import com.bangkit.freshfuel.model.response.LoginResponse
 
 class UserRepository(private val preference: UserPreference, private val apiService: ApiService) {
+
+    suspend fun getUser(): LiveData<Result<LoginData>> = liveData {
+        try {
+            emit(Result.Loading)
+            val data = preference.getUser()
+            if (data.token == "") {
+                emit(Result.Error("no data is found"))
+            } else {
+                emit(Result.Success(data))
+            }
+        } catch (exception: Exception) {
+            emit(Result.Error(exception.message.toString()))
+        }
+    }
+
+    fun logout() = preference.logout()
 
     suspend fun loginUser(user: LoginRequest): LiveData<Result<LoginResponse>> = liveData {
         try {

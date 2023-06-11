@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bangkit.freshfuel.data.repository.UserRepository
 import com.bangkit.freshfuel.di.Injection
 import com.bangkit.freshfuel.view.login.LoginViewModel
+import com.bangkit.freshfuel.view.main.ui.profile.ProfileViewModel
 import com.bangkit.freshfuel.view.register.RegisterViewModel
 
 class ViewModelFactory private constructor(private val repository: UserRepository) :
@@ -19,6 +20,9 @@ class ViewModelFactory private constructor(private val repository: UserRepositor
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(repository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

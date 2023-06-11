@@ -1,13 +1,10 @@
 package com.bangkit.freshfuel.view.main.ui.profile
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bangkit.freshfuel.data.repository.UserRepository
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(private val repository: UserRepository) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
-    }
-    val text: LiveData<String> = _text
+    suspend fun getUser() = repository.getUser()
+    fun logout() = repository.logout()
 }

@@ -25,6 +25,7 @@
     <color name="inverseSurface">#000000</color>
     <color name="inverseOnSurface">#FFFFFF</color>
     <color name="error">#FF5722</color>
+    <color name="caution">#FF9800</color>
     <color name="onError">#FFFFFF</color>
     <color name="errorContainer">#FFCCBC</color>
     <color name="onErrorContainer">#000000</color>
