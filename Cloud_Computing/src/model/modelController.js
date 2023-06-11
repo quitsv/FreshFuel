@@ -18,19 +18,19 @@ exports.getRecipe = async (req, res) => {
     var responseObj = {}
     snapshot.forEach(doc => {
         responseObj["information"] = {};
-        responseObj["properties"] = {};
-        responseObj["technique"] = {};
-        responseObj["ingredients"] = {};
+        responseObj["properties"] = [];
+        responseObj["technique"] = [];
+        responseObj["ingredients"] = [];
         Object.entries(doc.data()).forEach(([key, value]) => { 
             if (value != 0) {
                 if (key == "Recipe_Name" || key == "rating" || key == "sodium" || key == "protein" || key == "calories" || key == "fat") {
                     responseObj["information"][key] = value;
                 } else if (key == "22-minute meals" || key == "3-ingredient recipes" || key == "advance prep required" || key == "alcoholic" || key == "high fiber" || key == "low/no sugar"  || key == "low cholesterol" || key == "quick & easy") {
-                    responseObj["properties"][key] = value;
+                    responseObj["properties"].push(key);
                 } else if (key == "bake" || key == "boil" || key == "braise" || key == "broil" || key == "deep-fry" || key == "double boiler"  || key == "fry" || key == "grill" || key == "roast" || key == "saute" || key == "steam" || key == "stew" || key == "stir-fry") {
-                    responseObj["technique"][key] = value;
+                    responseObj["technique"].push(key);
                 } else{
-                    responseObj["ingredients"][key] = value;
+                    responseObj["ingredients"].push(key);
                 }
             }
         })
