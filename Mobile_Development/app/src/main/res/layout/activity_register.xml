@@ -60,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="username"
+            android:background="@drawable/rounded_edittext_bg"
             android:drawableStart="@drawable/ic_person"
             android:drawablePadding="8dp"
             android:ems="10"
@@ -82,6 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="emailAddress"
+            android:background="@drawable/rounded_edittext_bg"
             android:drawableStart="@drawable/ic_mail"
             android:drawablePadding="8dp"
             android:ems="10"
@@ -104,6 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="emailAddress"
+            android:background="@drawable/rounded_edittext_bg"
             android:drawableStart="@drawable/ic_lock"
             android:drawablePadding="8dp"
             android:ems="10"
@@ -132,8 +135,8 @@
         app:layout_constraintBottom_toTopOf="@id/registerButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_allergy"
-        app:layout_constraintTop_toBottomOf="@id/allergiesTextView" />
+        app:layout_constraintTop_toBottomOf="@id/allergiesTextView"
+        tools:listitem="@layout/item_allergy" />
 
     <Button
         android:id="@+id/registerButton"

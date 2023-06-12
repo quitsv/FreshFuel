@@ -16,7 +16,7 @@ import com.bangkit.freshfuel.data.UserPreference
 import com.bangkit.freshfuel.databinding.ActivityLoginBinding
 import com.bangkit.freshfuel.model.request.LoginRequest
 import com.bangkit.freshfuel.model.response.LoginResponse
-import com.bangkit.freshfuel.utils.ViewModelFactory
+import com.bangkit.freshfuel.utils.UserViewModelFactory
 import com.bangkit.freshfuel.view.main.MainActivity
 import com.bangkit.freshfuel.view.register.RegisterActivity
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: LoginViewModel by viewModels {
-        ViewModelFactory.getInstance(this)
+        UserViewModelFactory.getInstance(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -22,7 +22,7 @@ import com.bangkit.freshfuel.data.Result
 import com.bangkit.freshfuel.databinding.ActivityRegisterBinding
 import com.bangkit.freshfuel.model.AllergyItem
 import com.bangkit.freshfuel.model.request.RegisterRequest
-import com.bangkit.freshfuel.utils.ViewModelFactory
+import com.bangkit.freshfuel.utils.UserViewModelFactory
 import com.bangkit.freshfuel.view.login.LoginActivity
 import kotlinx.coroutines.launch
 
@@ -30,7 +30,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private val viewModel: RegisterViewModel by viewModels {
-        ViewModelFactory.getInstance(this)
+        UserViewModelFactory.getInstance(this)
     }
     private lateinit var allergiesRecyclerView: RecyclerView
     private lateinit var allergiesAdapter: AllergiesAdapter

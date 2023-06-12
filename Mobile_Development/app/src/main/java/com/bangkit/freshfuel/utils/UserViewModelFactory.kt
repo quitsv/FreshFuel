@@ -9,7 +9,7 @@ import com.bangkit.freshfuel.view.login.LoginViewModel
 import com.bangkit.freshfuel.view.main.ui.profile.ProfileViewModel
 import com.bangkit.freshfuel.view.register.RegisterViewModel
 
-class ViewModelFactory private constructor(private val repository: UserRepository) :
+class UserViewModelFactory private constructor(private val repository: UserRepository) :
     ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -30,10 +30,10 @@ class ViewModelFactory private constructor(private val repository: UserRepositor
 
     companion object {
         @Volatile
-        private var instance: ViewModelFactory? = null
-        fun getInstance(context: Context): ViewModelFactory =
+        private var instance: UserViewModelFactory? = null
+        fun getInstance(context: Context): UserViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository(context))
+                instance ?: UserViewModelFactory(Injection.provideUserRepository(context))
             }.also { instance = it }
     }
 }

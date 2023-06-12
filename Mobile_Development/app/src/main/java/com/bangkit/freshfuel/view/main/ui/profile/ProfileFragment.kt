@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bangkit.freshfuel.R
 import com.bangkit.freshfuel.data.Result
 import com.bangkit.freshfuel.databinding.FragmentProfileBinding
-import com.bangkit.freshfuel.utils.ViewModelFactory
+import com.bangkit.freshfuel.utils.UserViewModelFactory
 import com.bangkit.freshfuel.view.login.LoginActivity
 import kotlinx.coroutines.launch
 
@@ -23,7 +23,7 @@ class ProfileFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val viewModel: ProfileViewModel by viewModels {
-        ViewModelFactory.getInstance(requireActivity())
+        UserViewModelFactory.getInstance(requireActivity())
     }
 
     override fun onCreateView(

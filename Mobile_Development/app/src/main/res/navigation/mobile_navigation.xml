@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_food"
-        android:name="com.bangkit.freshfuel.view.main.ui.food.FoodFragment"
+        android:name="com.bangkit.freshfuel.view.main.ui.recipe.RecipeFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_food" />
+        tools:layout="@layout/fragment_recipe" />
 
     <fragment
         android:id="@+id/navigation_profile"

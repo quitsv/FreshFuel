@@ -4,16 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.main.ui.food.FoodFragment">
+    tools:context=".view.main.ui.recipe.RecipeFragment">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/recipeRecyclerView"
+        app:layout_constraintEnd_toEndOf="@id/recipeRecyclerView"
+        app:layout_constraintStart_toStartOf="@id/recipeRecyclerView"
+        app:layout_constraintTop_toTopOf="@id/recipeRecyclerView"
+        tools:visibility="visible" />
 
     <ImageView
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:src="@drawable/logo_png"
         android:layout_margin="16dp"
+        android:contentDescription="@string/application_logo"
+        android:src="@drawable/logo_png"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/application_logo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/menu"
@@ -27,28 +39,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/searchTextInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/searchTextInputEditText"
+        style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_edittext_bg"
+        android:drawableEnd="@drawable/ic_search"
+        android:drawablePadding="8dp"
+        android:ems="10"
+        android:hint="@string/prompt_search"
+        android:imeOptions="actionSearch"
+        android:inputType="textFilter"
+        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/menu">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/searchTextInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="emailAddress"
-            android:drawableEnd="@drawable/ic_search"
-            android:drawablePadding="8dp"
-            android:ems="10"
-            android:hint="@string/prompt_search"
-            android:inputType="textFilter" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@id/menu" />
 
     <View
         android:id="@+id/linebreak"
@@ -56,10 +64,10 @@
         android:layout_height="1dp"
         android:layout_margin="16dp"
         android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/searchTextInputLayout" />
+        app:layout_constraintTop_toBottomOf="@id/searchTextInputEditText" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/foodRecyclerView"
+        android:id="@+id/recipeRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -67,6 +75,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linebreak"
-        tools:listitem="@layout/item_menu"
-        />
+        tools:listitem="@layout/item_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
