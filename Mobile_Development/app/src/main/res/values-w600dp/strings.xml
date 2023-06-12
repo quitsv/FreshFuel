@@ -10,4 +10,6 @@
     <string name="title_profile">Profile</string>
     <string name="title_food">Foods</string>
     <string name="logout">Logout</string>
+    <string name="menu">Menu</string>
+    <string name="prompt_search">search menu</string>
 </resources>
