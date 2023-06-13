@@ -34,4 +34,5 @@
     <color name="scrim">#80000000</color>
 
     <color name="blue_link">#2196F3</color>
+    <color name="grey">#585858</color>
 </resources>

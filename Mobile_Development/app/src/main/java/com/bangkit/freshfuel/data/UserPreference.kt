@@ -13,6 +13,7 @@ class UserPreference(context: Context) {
             putString("token", data.accessToken)
             putString("name", data.dataUser!!.name)
             putString("email", data.dataUser.email)
+            putString("allergies", data.dataUser.allergies)
         }.apply()
     }
 
@@ -20,9 +21,11 @@ class UserPreference(context: Context) {
         val token = preference.getString("token", "")
         val name = preference.getString("name", "")
         val email = preference.getString("email", "")
+        val allergies = preference.getString("allergies", "")
         return LoginData(
             token = token,
             dataUser = DataUser(
+                allergies = allergies,
                 name = name,
                 email = email
             )
@@ -34,6 +37,7 @@ class UserPreference(context: Context) {
             putString("token", "")
             putString("name", "")
             putString("email", "")
+            putString("allergies", "")
         }.apply()
     }
 

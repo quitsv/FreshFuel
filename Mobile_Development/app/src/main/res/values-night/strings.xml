@@ -12,4 +12,9 @@
     <string name="logout">Logout</string>
     <string name="menu">Menu</string>
     <string name="prompt_search">search menu</string>
+    <string name="calories">Calories</string>
+    <string name="recipe_image">recipe_image</string>
+    <string name="rating">rating</string>
+    <string name="ingredients">ingredients</string>
+    <string name="ingredient_image">ingredient image</string>
 </resources>

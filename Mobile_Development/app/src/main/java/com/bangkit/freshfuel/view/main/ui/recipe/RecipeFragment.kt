@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.freshfuel.data.Result
 import com.bangkit.freshfuel.databinding.FragmentRecipeBinding
-import com.bangkit.freshfuel.utils.RecipeAdapter
+import com.bangkit.freshfuel.utils.adapter.RecipeAdapter
 import com.bangkit.freshfuel.utils.RecipeViewModelFactory
 import kotlinx.coroutines.launch
 

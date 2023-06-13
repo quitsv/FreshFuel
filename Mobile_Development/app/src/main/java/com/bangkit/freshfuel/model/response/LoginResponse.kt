@@ -16,6 +16,9 @@ data class LoginResponse(
 
 data class DataUser(
 
+	@field:SerializedName("allergies")
+	val allergies: String? = null,
+
 	@field:SerializedName("name")
 	val name: String? = null,
 

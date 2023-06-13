@@ -23,7 +23,11 @@ class AllergyData {
             AllergyItem("fish"),
             AllergyItem("pork"),
             AllergyItem("seafood"),
-            AllergyItem("squid")
+            AllergyItem("squid"),
+            AllergyItem("crab"),
+            AllergyItem("strawberry"),
+            AllergyItem("ham"),
+            AllergyItem("bacon")
         )
     }
 }

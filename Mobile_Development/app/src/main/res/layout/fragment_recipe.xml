@@ -18,20 +18,11 @@
         app:layout_constraintTop_toTopOf="@id/recipeRecyclerView"
         tools:visibility="visible" />
 
-    <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/application_logo"
-        android:src="@drawable/logo_png"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="16dp"
         android:text="@string/menu"
         android:textSize="32sp"
         android:textStyle="bold"

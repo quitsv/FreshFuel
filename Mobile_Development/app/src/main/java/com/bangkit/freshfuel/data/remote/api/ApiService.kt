@@ -4,6 +4,7 @@ import com.bangkit.freshfuel.model.request.LoginRequest
 import com.bangkit.freshfuel.model.request.RegisterRequest
 import com.bangkit.freshfuel.model.response.DefaultResponse
 import com.bangkit.freshfuel.model.response.LoginResponse
+import com.bangkit.freshfuel.model.response.RecipeDetailResponse
 import com.bangkit.freshfuel.model.response.SearchRecipesResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -26,4 +27,9 @@ interface ApiService {
     suspend fun search(
         @Query("recipeName") query: String
     ): Response<SearchRecipesResponse>
+
+    @GET("getRecipe")
+    suspend fun getRecipeDetail(
+        @Query("recipeName") name: String
+    ): Response<RecipeDetailResponse>
 }
