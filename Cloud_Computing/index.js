@@ -22,6 +22,3 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`server is running on PORT ${PORT}`);
 })
-
-// Export the API as a Cloud Function
-// exports.api = functions.https.onRequest(app);
