@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getRecipe, predict, search } = require('./modelController');
+const { getRecipe, search, generateRandom } = require('./modelController');
 
 // Get Recipe
 router.get('/getRecipe', getRecipe);
@@ -8,7 +8,7 @@ router.get('/getRecipe', getRecipe);
 // Search
 router.get('/search', search);
 
-// Predict
-router.post('/predict', predict);
+// Generate 5 random menu
+router.get('/generateRandom', generateRandom);
 
 module.exports = router;
