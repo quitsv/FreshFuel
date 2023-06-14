@@ -17,16 +17,7 @@ exports.getProgress = async (req, res) => {
             }
             var allProgress = []
             snapshot.forEach(doc => {
-                const responseData = {
-                    user: user,
-                    date: doc.data()["date"],
-                    progress: [
-                        [doc.data()["progress"]["breakfast"]["recipe"], doc.data()["progress"]["breakfast"]["calories"], doc.data()["progress"]["breakfast"]["status"]],
-                        [doc.data()["progress"]["lunch"]["recipe"], doc.data()["progress"]["lunch"]["calories"], doc.data()["progress"]["lunch"]["status"]],
-                        [doc.data()["progress"]["dinner"]["recipe"], doc.data()["progress"]["dinner"]["calories"], doc.data()["progress"]["dinner"]["status"]]
-                    ]
-                }
-                allProgress.push(responseData);
+                allProgress.push(doc.data());
             });
             allProgress.sort(function(a,b){
                 return new Date(b.date) - new Date(a.date);
@@ -41,16 +32,7 @@ exports.getProgress = async (req, res) => {
                 return;
             }
             snapshot.forEach(doc => {
-                const responseData = {
-                    user: user,
-                    date: date,
-                    progress: [
-                        [doc.data()["progress"]["breakfast"]["recipe"], doc.data()["progress"]["breakfast"]["calories"], doc.data()["progress"]["breakfast"]["status"]],
-                        [doc.data()["progress"]["lunch"]["recipe"], doc.data()["progress"]["lunch"]["calories"], doc.data()["progress"]["lunch"]["status"]],
-                        [doc.data()["progress"]["dinner"]["recipe"], doc.data()["progress"]["dinner"]["calories"], doc.data()["progress"]["dinner"]["status"]]
-                    ]
-                }
-                res.status(200).json({ message: 'Get progress success', error: null, data: responseData});
+                res.status(200).json({ message: 'Get progress success', error: null, data: doc.data()});
             });
         }
     } catch (error) {
@@ -77,48 +59,21 @@ exports.addProgress = async (req, res) => {
             const progressData = {
                 user: user,
                 date: date,
-                progress: {
-                    breakfast: {
-                        calories: calories,
+                progress: [
+                    {
                         recipe: breakfastMenu,
-                        status: 0
-                    },
-                    lunch: {
-                        calories: 0,
-                        recipe: null,
-                        status: 0
-                    },
-                    dinner: {
-                        calories: 0,
-                        recipe: null,
+                        calories: calories,
+                        rating: null,
                         status: 0
                     }
-                }
-            }
-            const responseData = {
-                user: user,
-                date: date,
-                progress: [
-                    [breakfastMenu, calories, 0],
-                    [null, 0, 0],
-                    [null, 0, 0]
                 ]
             }
             await progressRef.add(progressData);
-            res.status(200).json({ message: 'Add progress success', error: null, data: responseData });
+            res.status(200).json({ message: 'Add progress success', error: null, data: progressData });
             return;
         }
         snapshot.forEach(doc => {
-            const responseData = {
-                user: user,
-                date: date,
-                progress: [
-                    [doc.data()["progress"]["breakfast"]["recipe"], doc.data()["progress"]["breakfast"]["calories"], doc.data()["progress"]["breakfast"]["status"]],
-                    [doc.data()["progress"]["lunch"]["recipe"], doc.data()["progress"]["lunch"]["calories"], doc.data()["progress"]["lunch"]["status"]],
-                    [doc.data()["progress"]["dinner"]["recipe"], doc.data()["progress"]["dinner"]["calories"], doc.data()["progress"]["dinner"]["status"]]
-                ]
-            }
-            res.status(200).json({ message: 'Progress already exists', error: null, data: responseData });
+            res.status(200).json({ message: 'Progress already exists', error: null, data: doc.data() });
         });
     } catch (error) {
         res.status(500).json({ message: 'Failed to add progress', error: error.message });
@@ -128,7 +83,7 @@ exports.addProgress = async (req, res) => {
 // Update progress user by date
 exports.updateProgress = async (req, res) => {
     try {
-        const { date, lunchMenu, dinnerMenu } = req.body;
+        const { date, lunchMenu, dinnerMenu, rating } = req.body;
         const user = req.params['email']
         var calories = 0
         if (lunchMenu != null){
@@ -159,35 +114,22 @@ exports.updateProgress = async (req, res) => {
             });
 
             const dataLunch = {
-                progress: {
-                    breakfast: {
-                        calories: oldData["progress"]["breakfast"]["calories"],
-                        recipe: oldData["progress"]["breakfast"]["recipe"],
+                progress: [
+                    {
+                        recipe: oldData["progress"][0]["recipe"],
+                        calories: oldData["progress"][0]["calories"],
+                        rating: rating,
                         status: 1
                     },
-                    lunch: {
-                        calories: calories,
+                    {
                         recipe: lunchMenuRecipe["information"]["Recipe_Name"],
-                        status: 0
-                    },
-                    dinner: {
-                        calories: 0,
-                        recipe: null,
+                        calories: calories,
+                        rating: null,
                         status: 0
                     }
-                }
-            }
-            const responseData = {
-                user: user,
-                date: date,
-                progress: [
-                    [oldData["progress"]["breakfast"]["recipe"], oldData["progress"]["breakfast"]["calories"], 1],
-                    [lunchMenuRecipe["information"]["Recipe_Name"], calories, 0],
-                    [null, 0, 0]
                 ]
             }
             await progressRef.doc(id).update(dataLunch);
-            res.status(500).json({ message: 'Update progress success', error: null, data: responseData });
         }else if (dinnerMenu != null){
             const dinnerMenuRecipe = await getRecipeData(dinnerMenu, res);
             // check recipe
@@ -199,7 +141,6 @@ exports.updateProgress = async (req, res) => {
             if (dinnerMenuRecipe["information"]["calories"] != null){
                 calories = dinnerMenuRecipe["information"]["calories"]
             }
-
             // check progress exists or not
             const snapshot = await progressRef.where('user', '==', user).where('date', '==', date).get();
             if (snapshot.empty) {
@@ -215,35 +156,28 @@ exports.updateProgress = async (req, res) => {
             });
 
             const dataDinner = {
-                progress: {
-                    breakfast: {
-                        calories: oldData["progress"]["breakfast"]["calories"],
-                        recipe: oldData["progress"]["breakfast"]["recipe"],
+                progress: [
+                    {
+                        recipe: oldData["progress"][0]["recipe"],
+                        calories: oldData["progress"][0]["calories"],
+                        rating: oldData["progress"][0]["rating"],
                         status: 1
                     },
-                    lunch: {
-                        calories: oldData["progress"]["lunch"]["calories"],
-                        recipe: oldData["progress"]["lunch"]["recipe"],
+                    {
+                        recipe: oldData["progress"][1]["recipe"],
+                        calories: oldData["progress"][1]["calories"],
+                        rating: rating,
                         status: 1
                     },
-                    dinner: {
-                        calories: calories,
+                    {
                         recipe: dinnerMenuRecipe["information"]["Recipe_Name"],
+                        calories: calories,
+                        rating: null,
                         status: 0
                     }
-                }
-            }
-            const responseData = {
-                user: user,
-                date: date,
-                progress: [
-                    [oldData["progress"]["breakfast"]["recipe"], oldData["progress"]["breakfast"]["calories"], 1],
-                    [oldData["progress"]["lunch"]["recipe"], oldData["progress"]["lunch"]["calories"], 1],
-                    [dinnerMenuRecipe["information"]["Recipe_Name"], calories, 0]
                 ]
             }
             await progressRef.doc(id).update(dataDinner);
-            res.status(500).json({ message: 'Update progress success', error: null, data: responseData });
         } else {
             // check progress exists or not
             const snapshot = await progressRef.where('user', '==', user).where('date', '==', date).get();
@@ -260,36 +194,34 @@ exports.updateProgress = async (req, res) => {
             });
 
             const dataDinner = {
-                progress: {
-                    breakfast: {
-                        calories: oldData["progress"]["breakfast"]["calories"],
-                        recipe: oldData["progress"]["breakfast"]["recipe"],
+                progress: [
+                    {
+                        recipe: oldData["progress"][0]["recipe"],
+                        calories: oldData["progress"][0]["calories"],
+                        rating: oldData["progress"][0]["rating"],
                         status: 1
                     },
-                    lunch: {
-                        calories: oldData["progress"]["lunch"]["calories"],
-                        recipe: oldData["progress"]["lunch"]["recipe"],
+                    {
+                        recipe: oldData["progress"][1]["recipe"],
+                        calories: oldData["progress"][1]["calories"],
+                        rating: oldData["progress"][1]["rating"],
                         status: 1
                     },
-                    dinner: {
-                        calories: oldData["progress"]["dinner"]["calories"],
-                        recipe: oldData["progress"]["dinner"]["recipe"],
+                    {
+                        recipe: oldData["progress"][2]["recipe"],
+                        calories: oldData["progress"][2]["calories"],
+                        rating: rating,
                         status: 1
                     }
-                }
-            }
-            const responseData = {
-                user: user,
-                date: date,
-                progress: [
-                    [oldData["progress"]["breakfast"]["recipe"], oldData["progress"]["breakfast"]["calories"], 1],
-                    [oldData["progress"]["lunch"]["recipe"], oldData["progress"]["lunch"]["calories"], 1],
-                    [oldData["progress"]["dinner"]["recipe"], oldData["progress"]["dinner"]["calories"], 1]
                 ]
             }
             await progressRef.doc(id).update(dataDinner);
-            res.status(500).json({ message: 'Update progress success', error: null, data: responseData });
         }
+        
+        const dataUpdated = await progressRef.where('user', '==', user).where('date', '==', date).get();
+        dataUpdated.forEach(doc => {
+            res.status(500).json({ message: 'Update progress success', error: null, data: doc.data() });
+        });
     } catch (error) {
         res.status(500).json({ message: 'Failed to update progress', error: error.message });
     }
