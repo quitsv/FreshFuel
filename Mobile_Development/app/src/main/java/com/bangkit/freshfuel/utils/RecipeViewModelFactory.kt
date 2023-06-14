@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bangkit.freshfuel.data.repository.RecipeRepository
 import com.bangkit.freshfuel.di.Injection
 import com.bangkit.freshfuel.view.detail.DetailViewModel
+import com.bangkit.freshfuel.view.main.ui.home.HomeViewModel
 import com.bangkit.freshfuel.view.main.ui.recipe.RecipeViewModel
 
 class RecipeViewModelFactory private constructor(private val repository: RecipeRepository) :
@@ -14,6 +15,9 @@ class RecipeViewModelFactory private constructor(private val repository: RecipeR
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(repository) as T
+            }
             modelClass.isAssignableFrom(RecipeViewModel::class.java) -> {
                 RecipeViewModel(repository) as T
             }

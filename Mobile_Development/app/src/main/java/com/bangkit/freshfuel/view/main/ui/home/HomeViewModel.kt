@@ -1,13 +1,11 @@
 package com.bangkit.freshfuel.view.main.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bangkit.freshfuel.data.repository.RecipeRepository
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val repository: RecipeRepository) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
+    val userData = repository.getUser()
+
+    suspend fun getCurrentProgress(date: String) = repository.getProgress()
 }

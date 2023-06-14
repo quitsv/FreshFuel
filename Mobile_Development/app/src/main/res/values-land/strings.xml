@@ -17,4 +17,10 @@
     <string name="rating">rating</string>
     <string name="ingredients">ingredients</string>
     <string name="ingredient_image">ingredient image</string>
+    <string name="breakfast">breakfast</string>
+    <string name="lunch">lunch</string>
+    <string name="dinner">dinner</string>
+    <string name="greetings">Hi, %s!</string>
+    <string name="calories_count">Today calories: 0</string>
+    <string name="add_food">add new food</string>
 </resources>

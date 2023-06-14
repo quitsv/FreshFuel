@@ -9,6 +9,12 @@ import com.bangkit.freshfuel.model.response.Data
 
 class RecipeRepository(private val preference: UserPreference, private val apiService: ApiService) {
 
+    suspend fun getProgress(): LiveData<Result<String>> = liveData {
+
+    }
+
+    fun getUser() = preference.getUser()
+
     suspend fun getRecipeDetail(name: String): LiveData<Result<Data>> = liveData {
         try {
             emit(Result.Loading)
