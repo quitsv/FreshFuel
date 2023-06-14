@@ -1,19 +1,96 @@
 const { getFirestore } = require('firebase-admin/firestore');
-const admin = require('firebase-admin');
 require('../utils/firebase-config.js');
-// const { PredictionServiceClient } = require('@google-cloud/aiplatform');
 
 const db = getFirestore();
+const recipesRef = db.collection('recipes');
 
 // Get Detail Recipe
 exports.getRecipe = async (req, res) => {
-  try {
-    const recipe = req.query.recipeName
-    const recipesRef = db.collection('recipes');
+    try {
+        const recipe = req.query.recipeName
+        const responseObj = await getRecipeData(recipe, res);
+        console.log(responseObj);
+        if(responseObj == null){
+            res.status(200).json({ message: 'No matching recipe', error: null, data: null });
+            return;
+        }
+        res.status(200).json({ message: 'Get recipe success', error: null, data: responseObj});
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to get recipe', error: error.message });
+    }
+};
+
+// Get Search Recipe
+exports.search = async (req, res) => {
+    try {
+        const recipeName = req.query.recipeName
+        var listRecipes = [];
+        const snapshot = await recipesRef.select('Recipe_Name').get();
+        
+        for (const recipe of snapshot.docs) {
+            if(listRecipes.length < 10 ){
+                if (recipe.data()["Recipe_Name"].toLowerCase().includes(recipeName.toLowerCase())){
+                    listRecipes.push(recipe.data()["Recipe_Name"]);
+                }
+            }else{
+                break;
+            }
+        }
+        res.status(200).json({ message: 'Search recipe success', error: null, data: listRecipes});
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to search recipe', error: error.message });
+    }
+};
+
+// Get 5 random menu
+exports.generateRandom = async (req, res) => {
+    try {
+        var listRecipes = [];
+        const allergies = req.query.allergies;
+        listAllergies = allergies.toLowerCase().split(', ');
+        const snapshot = await recipesRef.limit(300).get();
+
+        // Get document with random index
+        do{
+            var containAllergy = false;
+            var doubleRecipe = false;
+            var randomIndex = Math.floor(Math.random() * (300 - 0 + 1) + 0)
+            for (var j = 0; j < listAllergies.length; j++){
+                if(snapshot.docs[randomIndex].data()["Recipe_Name"].toLowerCase().includes(listAllergies[j])){
+                    containAllergy = true;
+                    break;
+                }
+                if(snapshot.docs[randomIndex].data()[listAllergies[j]]==1){
+                    containAllergy = true;
+                    break;
+                }
+            }
+            if(containAllergy){continue;}
+
+            if (listRecipes.length == 0){
+                listRecipes.push(snapshot.docs[randomIndex].data()["Recipe_Name"]);
+            } else if (listRecipes.length < 5){
+                for (var j = 0; j < listRecipes.length; j++){
+                    if (listRecipes[j]==snapshot.docs[randomIndex].data()["Recipe_Name"]){
+                        doubleRecipe = true;
+                        break;
+                    }
+                }
+                if(doubleRecipe){continue;}
+                listRecipes.push(snapshot.docs[randomIndex].data()["Recipe_Name"]);
+            }
+        }while(listRecipes.length < 5);
+
+        res.status(200).json({ message: 'Generate recipe success', error: null, data: listRecipes});
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to generate random recipe', error: error.message });
+    }
+};
+
+const getRecipeData = async (recipe, res) => {
     const snapshot = await recipesRef.where('Recipe_Name', '==', recipe).get();
     if (snapshot.empty) {
-        res.status(200).json({ message: 'No matching recipe', error: error.message});
-        return;
+        return null;
     }
     var responseObj = {}
     snapshot.forEach(doc => {
@@ -35,53 +112,6 @@ exports.getRecipe = async (req, res) => {
             }
         })
     });
-        res.status(200).json({ message: 'Get recipe success', error: null, data: responseObj});
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to get recipe', error: error.message });
-    }
-};
-
-// Get Search Recipe
-exports.search = async (req, res) => {
-    try {
-        const recipeName = req.query.recipeName
-        var listRecipes = [];
-        const recipesRef = db.collection('recipes');
-        const snapshot = await recipesRef.select('Recipe_Name').get();
-        
-        for (const recipe of snapshot.docs) {
-            if(listRecipes.length < 10 ){
-                if (recipe.data()["Recipe_Name"].toLowerCase().includes(recipeName.toLowerCase())){
-                    listRecipes.push(recipe.data()["Recipe_Name"]);
-                }
-            }else{
-                break;
-            }
-        }
-        res.status(200).json({ message: 'Search recipe success', error: null, data: listRecipes});
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to search recipe', error: error.message });
-    }
-  };
-
-exports.predict = async (req, res) => {
-    try {
-        const { allergies, recipeName, rating } = req.body;
-
-        // load model ML
-        // const modelPath = './path/to/your/model';
-        // const model = await tf.loadLayersModel(`file://${modelPath}`);
-
-        // Perform prediction
-        // const inputTensor = tf.tensor([inputData]);
-        // const outputTensor = model.predict(inputTensor);
-        // const prediction = outputTensor.arraySync()[0];
-
-        var prediction = ["Sweet Potato and Sausage Soup","Black Bean and Vegetable Wraps","Baked Beans","Tomato and Mozzarella Bread-Bowl Souffles"]
-
-        res.status(200).json({ message: 'Predict success', error: null, data: prediction });
-
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to predict', error: error.message });
-    }
-  };
+    return responseObj;
+}
+exports.getRecipeData = getRecipeData
