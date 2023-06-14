@@ -46,8 +46,12 @@ exports.search = async (req, res) => {
 exports.generateRandom = async (req, res) => {
     try {
         var listRecipes = [];
+        var noAllergy = true;
         const allergies = req.query.allergies;
-        listAllergies = allergies.toLowerCase().split(', ');
+        if (allergies != "" && allergies != null){
+            noAllergy = false;
+            listAllergies = allergies.toLowerCase().split(', ');
+        }
         const snapshot = await recipesRef.limit(300).get();
 
         // Get document with random index
@@ -55,14 +59,16 @@ exports.generateRandom = async (req, res) => {
             var containAllergy = false;
             var doubleRecipe = false;
             var randomIndex = Math.floor(Math.random() * (300 - 0 + 1) + 0)
-            for (var j = 0; j < listAllergies.length; j++){
-                if(snapshot.docs[randomIndex].data()["Recipe_Name"].toLowerCase().includes(listAllergies[j])){
-                    containAllergy = true;
-                    break;
-                }
-                if(snapshot.docs[randomIndex].data()[listAllergies[j]]==1){
-                    containAllergy = true;
-                    break;
+            if (!noAllergy){
+                for (var j = 0; j < listAllergies.length; j++){
+                    if(snapshot.docs[randomIndex].data()["Recipe_Name"].toLowerCase().includes(listAllergies[j])){
+                        containAllergy = true;
+                        break;
+                    }
+                    if(snapshot.docs[randomIndex].data()[listAllergies[j]]==1){
+                        containAllergy = true;
+                        break;
+                    }
                 }
             }
             if(containAllergy){continue;}
