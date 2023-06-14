@@ -18,7 +18,7 @@ class UserRepository(private val preference: UserPreference, private val apiServ
             emit(Result.Loading)
             val data = preference.getUser()
             if (data.token == "") {
-                emit(Result.Error("no data is found"))
+                emit(Result.Error("no recipeData is found"))
             } else {
                 emit(Result.Success(data))
             }

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class RecipeDetailResponse(
 
 	@field:SerializedName("data")
-	val data: Data? = null,
+	val recipeData: RecipeData? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -14,7 +14,7 @@ data class RecipeDetailResponse(
 	val error: Any? = null
 )
 
-data class Data(
+data class RecipeData(
 
 	@field:SerializedName("technique")
 	val technique: List<String>? = null,

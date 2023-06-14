@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.freshfuel.data.Result
 import com.bangkit.freshfuel.databinding.ActivityDetailBinding
-import com.bangkit.freshfuel.model.response.Data
+import com.bangkit.freshfuel.model.response.RecipeData
 import com.bangkit.freshfuel.utils.RecipeViewModelFactory
 import com.bangkit.freshfuel.utils.adapter.IngredientsAdapter
 import kotlinx.coroutines.launch
@@ -61,7 +61,7 @@ class DetailActivity : AppCompatActivity() {
                         setupLoading(false)
                         Toast.makeText(
                             this@DetailActivity,
-                            "Error getting data",
+                            "Error getting recipeData",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -74,13 +74,13 @@ class DetailActivity : AppCompatActivity() {
         binding.progressBar.isVisible = isLoading
     }
 
-    private fun setupUI(data: Data) {
-        adapter = IngredientsAdapter(data.ingredients as List<String>)
+    private fun setupUI(recipeData: RecipeData) {
+        adapter = IngredientsAdapter(recipeData.ingredients as List<String>)
         recyclerView.adapter = adapter
         binding.apply {
-            calories.text = data.information?.calories.toString().plus(" calories")
-            recipeName.text = data.information?.recipeName
-            ratingNumber.text = data.information?.rating.toString()
+            calories.text = recipeData.information?.calories.toString().plus(" calories")
+            recipeName.text = recipeData.information?.recipeName
+            ratingNumber.text = recipeData.information?.rating.toString()
         }
     }
 

@@ -90,7 +90,7 @@ class RecipeFragment : Fragment() {
                         setLoading(false)
                         Toast.makeText(
                             requireActivity(),
-                            "error fetching the data",
+                            "error fetching the recipe data",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

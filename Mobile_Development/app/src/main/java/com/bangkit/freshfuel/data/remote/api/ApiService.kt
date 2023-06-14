@@ -4,12 +4,14 @@ import com.bangkit.freshfuel.model.request.LoginRequest
 import com.bangkit.freshfuel.model.request.RegisterRequest
 import com.bangkit.freshfuel.model.response.DefaultResponse
 import com.bangkit.freshfuel.model.response.LoginResponse
+import com.bangkit.freshfuel.model.response.ProgressResponse
 import com.bangkit.freshfuel.model.response.RecipeDetailResponse
 import com.bangkit.freshfuel.model.response.SearchRecipesResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -32,4 +34,10 @@ interface ApiService {
     suspend fun getRecipeDetail(
         @Query("recipeName") name: String
     ): Response<RecipeDetailResponse>
+
+    @GET("progress/user/{email}")
+    suspend fun getCurrentProgress(
+        @Path("email") email: String,
+        @Query("date") date: String
+    ): Response<ProgressResponse>
 }
