@@ -38,9 +38,16 @@ class ProgressAdapter(private val listProgress: List<ProgressItem>) :
             if (progress.status == 1) {
                 menuChecked.visibility = View.VISIBLE
                 menuRateButton.visibility = View.INVISIBLE
+                menuImage.visibility = View.GONE
+                menuName.visibility = View.GONE
+                menuCalories.visibility = View.GONE
             } else {
+                menuImage.visibility = View.VISIBLE
+                menuName.visibility = View.VISIBLE
+                menuCalories.visibility = View.VISIBLE
                 menuRateButton.visibility = View.VISIBLE
                 menuChecked.visibility = View.INVISIBLE
+                menuImage.visibility = View.VISIBLE
             }
 
             holder.itemView.setOnClickListener {

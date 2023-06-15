@@ -51,6 +51,11 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    override fun onResume() {
+        setupViewModel()
+        super.onResume()
+    }
+
     private fun setupViewModel() {
         val email = viewModel.userData.dataUser?.email!!
         viewModel.userData.let { user ->
