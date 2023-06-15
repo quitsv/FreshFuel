@@ -1,13 +1,17 @@
 package com.bangkit.freshfuel.utils.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.freshfuel.R
 import com.bangkit.freshfuel.model.response.ProgressItem
+import com.bangkit.freshfuel.view.detail.DetailActivity
+import com.bangkit.freshfuel.view.rating.RatingActivity
 
 class ProgressAdapter(private val listProgress: List<ProgressItem>) :
     RecyclerView.Adapter<ProgressAdapter.ProgressViewHolder>() {
@@ -17,11 +21,12 @@ class ProgressAdapter(private val listProgress: List<ProgressItem>) :
         val menuCalories: TextView = view.findViewById(R.id.menuCalories)
         val menuImage: ImageView = view.findViewById(R.id.menuImage)
         val menuChecked: ImageView = view.findViewById(R.id.menuCheck)
+        val menuRateButton: Button = view.findViewById(R.id.rateButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ProgressViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.home_card, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_home_card, parent, false)
         )
 
     override fun onBindViewHolder(holder: ProgressViewHolder, position: Int) {
@@ -32,8 +37,10 @@ class ProgressAdapter(private val listProgress: List<ProgressItem>) :
             menuCalories.text = calories
             if (progress.status == 1) {
                 menuChecked.visibility = View.VISIBLE
+                menuRateButton.visibility = View.INVISIBLE
             } else {
-                menuChecked.visibility = View.GONE
+                menuRateButton.visibility = View.VISIBLE
+                menuChecked.visibility = View.INVISIBLE
             }
 
             holder.itemView.setOnClickListener {
@@ -48,8 +55,16 @@ class ProgressAdapter(private val listProgress: List<ProgressItem>) :
                 }
             }
 
-            holder.menuImage.setOnClickListener {
+            holder.menuRateButton.setOnClickListener {
+                val intent = Intent(holder.itemView.context, RatingActivity::class.java)
+                intent.putExtra(DetailActivity.RECIPE_NAME, progress.recipe)
+                holder.itemView.context.startActivity(intent)
+            }
 
+            holder.menuImage.setOnClickListener {
+                val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.RECIPE_NAME, progress.recipe)
+                holder.itemView.context.startActivity(intent)
             }
         }
     }

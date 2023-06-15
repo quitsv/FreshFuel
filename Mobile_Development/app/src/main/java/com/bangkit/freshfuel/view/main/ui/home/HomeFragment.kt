@@ -1,6 +1,5 @@
 package com.bangkit.freshfuel.view.main.ui.home
 
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,7 +20,6 @@ import com.bangkit.freshfuel.model.response.ProgressItem
 import com.bangkit.freshfuel.utils.RecipeViewModelFactory
 import com.bangkit.freshfuel.utils.adapter.ProgressAdapter
 import com.bangkit.freshfuel.utils.getCurrentDateFormatted
-import com.bangkit.freshfuel.view.recommender.RecommendActivity
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -46,22 +44,11 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        setupFab()
         setupRecyclerView()
         setupUI(emptyList())
         setupViewModel()
 
         return root
-    }
-
-    private fun setupFab() {
-        binding.addFood.setOnClickListener {
-            val recipePreference = RecipePreference.getInstance(requireActivity())
-            val recipe = recipePreference.getRecipes()
-            val intent = Intent(requireContext(), RecommendActivity::class.java)
-            intent.putExtra(RecommendActivity.EXTRA_RECOMMENDATIONS, recipe as ArrayList<String>)
-            startActivity(intent)
-        }
     }
 
     private fun setupViewModel() {

@@ -2,10 +2,10 @@ package com.bangkit.freshfuel.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RandomResponse(
+data class PredictResponse(
 
 	@field:SerializedName("data")
-	val randomData: List<String>? = null,
+	val predictData: List<String>? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,

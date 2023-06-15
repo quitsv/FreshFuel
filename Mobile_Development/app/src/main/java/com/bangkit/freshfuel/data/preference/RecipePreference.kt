@@ -2,7 +2,6 @@ package com.bangkit.freshfuel.data.preference
 
 import android.content.Context
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 class RecipePreference(context: Context) {
     private val preference = context.getSharedPreferences("recipe", Context.MODE_PRIVATE)
@@ -20,7 +19,8 @@ class RecipePreference(context: Context) {
         val gson = Gson()
         val json = preference.getString("recommend", null)
 
-        return gson.fromJson(json, object : TypeToken<List<String>>() {}.type)
+        val recipes = gson.fromJson(json, Array<String>::class.java).toList()
+        return recipes.map { it.trim() }
     }
 
     companion object {

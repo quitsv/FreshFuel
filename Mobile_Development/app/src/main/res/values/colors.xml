@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary">#4CAF50</color>
+    <color name="primary">#277E2A</color>
     <color name="onPrimary">#FFFFFF</color>
     <color name="primaryContainer">#FFFFFF</color>
     <color name="onPrimaryContainer">#000000</color>
@@ -35,4 +35,5 @@
 
     <color name="blue_link">#2196F3</color>
     <color name="grey">#585858</color>
+    <color name="gold">#DBAC34</color>
 </resources>

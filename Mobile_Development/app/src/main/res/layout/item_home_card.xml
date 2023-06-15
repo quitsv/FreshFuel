@@ -5,7 +5,7 @@
     android:id="@+id/menuCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
+    android:layout_marginVertical="8dp"
     android:backgroundTint="@color/primary"
     app:cardCornerRadius="16dp">
 
@@ -18,41 +18,57 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:layout_marginBottom="5dp"
             android:text="@string/menu"
             android:textColor="@color/onPrimary"
             android:textSize="32sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/menuImage"
-            app:layout_constraintEnd_toStartOf="@+id/menuCheck"
+            app:layout_constraintBottom_toBottomOf="@+id/rateButton"
+            app:layout_constraintEnd_toStartOf="@+id/rateButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/rateButton" />
 
         <ImageView
             android:id="@+id/menuCheck"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/menu"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:contentDescription="@string/checked"
             android:src="@drawable/ic_check"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@id/menuTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/menuTitle"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/rateButton"
+            app:layout_constraintEnd_toEndOf="@id/rateButton"
+            app:layout_constraintTop_toTopOf="@id/rateButton"
             app:tint="@color/onPrimary"
+            tools:visibility="invisible" />
+
+        <Button
+            android:id="@+id/rateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="@color/onPrimary"
+            android:text="@string/prompt_rate"
+            android:textColor="@color/primary"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/menuImage"
             android:layout_width="0dp"
             android:layout_height="210dp"
-            android:layout_marginVertical="8dp"
+            android:layout_marginTop="8dp"
             android:contentDescription="@string/menu"
             android:scaleType="centerCrop"
             android:src="@drawable/menu_example"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/menuTitle"
+            app:layout_constraintTop_toBottomOf="@id/rateButton"
             tools:visibility="visible" />
 
         <TextView

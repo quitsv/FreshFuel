@@ -8,7 +8,7 @@ import com.bangkit.freshfuel.di.Injection
 import com.bangkit.freshfuel.view.detail.DetailViewModel
 import com.bangkit.freshfuel.view.main.ui.home.HomeViewModel
 import com.bangkit.freshfuel.view.main.ui.recipe.RecipeViewModel
-import com.bangkit.freshfuel.view.recommender.RecommenderViewModel
+import com.bangkit.freshfuel.view.rating.RatingViewModel
 
 class RecipeViewModelFactory private constructor(private val repository: RecipeRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -20,8 +20,8 @@ class RecipeViewModelFactory private constructor(private val repository: RecipeR
                 HomeViewModel(repository) as T
             }
 
-            modelClass.isAssignableFrom(RecommenderViewModel::class.java) -> {
-                RecommenderViewModel(repository) as T
+            modelClass.isAssignableFrom(RatingViewModel::class.java) -> {
+                RatingViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(RecipeViewModel::class.java) -> {
