@@ -29,4 +29,5 @@
     <string name="prompt_rate">rate</string>
     <string name="what_to_eat">choose what to eat next</string>
     <string name="checked">checked</string>
+    <string name="prompt_submit">submit</string>
 </resources>

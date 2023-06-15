@@ -1,5 +1,6 @@
 package com.bangkit.freshfuel.view.main.ui.home
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.bangkit.freshfuel.model.response.ProgressItem
 import com.bangkit.freshfuel.utils.RecipeViewModelFactory
 import com.bangkit.freshfuel.utils.adapter.ProgressAdapter
 import com.bangkit.freshfuel.utils.getCurrentDateFormatted
+import com.bangkit.freshfuel.view.landing.NewUserActivity
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -65,9 +67,11 @@ class HomeFragment : Fragment() {
                 viewModel.getHistory(email).observe(viewLifecycleOwner) { result ->
                     when (result) {
                         is Result.Loading -> {
+                            setLoading(true)
                         }
 
                         is Result.Success -> {
+                            setLoading(false)
                             val data = result.data
                             if (data.isEmpty()) {
                                 generateRandom(user.dataUser?.allergies!!)
@@ -77,6 +81,7 @@ class HomeFragment : Fragment() {
                         }
 
                         else -> {
+                            setLoading(false)
                             Toast.makeText(
                                 requireContext(),
                                 "Something went wrong",
@@ -122,14 +127,19 @@ class HomeFragment : Fragment() {
             viewModel.getRandom(allergies).observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Result.Loading -> {
+                        setLoading(true)
                     }
 
                     is Result.Success -> {
+                        setLoading(false)
                         val recipePreference = RecipePreference.getInstance(requireActivity())
                         recipePreference.setRecipe(result.data)
+                        val intent = Intent(requireActivity(), NewUserActivity::class.java)
+                        startActivity(intent)
                     }
 
                     else -> {
+                        setLoading(false)
                         Toast.makeText(
                             requireContext(),
                             "Something went wrong",

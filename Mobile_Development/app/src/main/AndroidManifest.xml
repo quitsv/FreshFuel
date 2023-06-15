@@ -16,10 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.rating.RatingActivity"
+            android:name=".view.landing.NewUserActivity"
             android:exported="false" />
         <activity
-            android:name=".view.recommender.RecommendActivity"
+            android:name=".view.rating.RatingActivity"
             android:exported="false" />
         <activity
             android:name=".view.detail.DetailActivity"

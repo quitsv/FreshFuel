@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bangkit.freshfuel.data.repository.RecipeRepository
 import com.bangkit.freshfuel.di.Injection
 import com.bangkit.freshfuel.view.detail.DetailViewModel
+import com.bangkit.freshfuel.view.landing.NewUserViewModel
 import com.bangkit.freshfuel.view.main.ui.home.HomeViewModel
 import com.bangkit.freshfuel.view.main.ui.recipe.RecipeViewModel
 import com.bangkit.freshfuel.view.rating.RatingViewModel
@@ -30,6 +31,10 @@ class RecipeViewModelFactory private constructor(private val repository: RecipeR
 
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
                 DetailViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(NewUserViewModel::class.java) -> {
+                NewUserViewModel(repository) as T
             }
 
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
