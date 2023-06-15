@@ -7,5 +7,9 @@ class HomeViewModel(private val repository: RecipeRepository) : ViewModel() {
 
     val userData = repository.getUser()
 
+    suspend fun getHistory(email: String) = repository.getHistory(email)
+
     suspend fun getCurrentProgress(email: String, date: String) = repository.getCurrentProgress(email, date)
+
+    suspend fun getRandom(allergies: String) = repository.getRandom(allergies)
 }

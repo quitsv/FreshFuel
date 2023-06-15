@@ -21,9 +21,11 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "BASE_URL", "\"http://api.fresh-fuel.as.r.appspot.com/\""
+            buildConfigField "String", "MODEL_URL", "\"http://34.101.62.126:8080/\""
         }
         release {
             buildConfigField "String", "BASE_URL", "\"http://api.fresh-fuel.as.r.appspot.com/\""
+            buildConfigField "String", "MODEL_URL", "\"http://34.101.62.126:8080/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

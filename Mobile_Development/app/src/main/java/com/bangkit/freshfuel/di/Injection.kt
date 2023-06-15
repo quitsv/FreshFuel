@@ -1,7 +1,7 @@
 package com.bangkit.freshfuel.di
 
 import android.content.Context
-import com.bangkit.freshfuel.data.UserPreference
+import com.bangkit.freshfuel.data.preference.UserPreference
 import com.bangkit.freshfuel.data.remote.api.ApiConfig
 import com.bangkit.freshfuel.data.repository.RecipeRepository
 import com.bangkit.freshfuel.data.repository.UserRepository

@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bangkit.freshfuel.R
 import com.bangkit.freshfuel.data.Result
-import com.bangkit.freshfuel.data.UserPreference
+import com.bangkit.freshfuel.data.preference.UserPreference
 import com.bangkit.freshfuel.databinding.ActivityLoginBinding
 import com.bangkit.freshfuel.model.request.LoginRequest
 import com.bangkit.freshfuel.model.response.LoginResponse

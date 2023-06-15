@@ -1,5 +1,6 @@
 package com.bangkit.freshfuel.view.main.ui.home
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,10 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.freshfuel.R
 import com.bangkit.freshfuel.data.Result
+import com.bangkit.freshfuel.data.preference.RecipePreference
 import com.bangkit.freshfuel.databinding.FragmentHomeBinding
 import com.bangkit.freshfuel.model.response.ProgressItem
 import com.bangkit.freshfuel.utils.RecipeViewModelFactory
 import com.bangkit.freshfuel.utils.adapter.ProgressAdapter
+import com.bangkit.freshfuel.utils.getCurrentDateFormatted
+import com.bangkit.freshfuel.view.recommender.RecommendActivity
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -32,7 +36,7 @@ class HomeFragment : Fragment() {
     }
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ProgressAdapter
-    private val currentDate = "2020-10-05"
+    private val currentDate = getCurrentDateFormatted()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,35 +46,101 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        setupFab()
         setupRecyclerView()
+        setupUI(emptyList())
         setupViewModel()
 
         return root
     }
 
+    private fun setupFab() {
+        binding.addFood.setOnClickListener {
+            val recipePreference = RecipePreference.getInstance(requireActivity())
+            val recipe = recipePreference.getRecipes()
+            val intent = Intent(requireContext(), RecommendActivity::class.java)
+            intent.putExtra(RecommendActivity.EXTRA_RECOMMENDATIONS, recipe as ArrayList<String>)
+            startActivity(intent)
+        }
+    }
+
     private fun setupViewModel() {
         val email = viewModel.userData.dataUser?.email!!
-        viewModel.userData.let { data ->
-            binding.greetings.text = getString(R.string.greetings, data.dataUser?.name)
-        }
+        viewModel.userData.let { user ->
+            binding.greetings.text = getString(R.string.greetings, user.dataUser?.name)
 
+            lifecycleScope.launch {
+                viewModel.getHistory(email).observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                        }
+
+                        is Result.Success -> {
+                            val data = result.data
+                            if (data.isEmpty()) {
+                                generateRandom(user.dataUser?.allergies!!)
+                            } else {
+                                getCurrentProgress(email)
+                            }
+                        }
+
+                        else -> {
+                            Toast.makeText(
+                                requireContext(),
+                                "Something went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getCurrentProgress(email: String) {
         lifecycleScope.launch {
-            viewModel.getCurrentProgress(email, currentDate).observe(viewLifecycleOwner) { result ->
+            viewModel.getCurrentProgress(email, currentDate)
+                .observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                            setLoading(true)
+                        }
+
+                        is Result.Success -> {
+                            setLoading(false)
+                            setupUI(result.data)
+                            setupAdapter(result.data)
+                        }
+
+                        is Result.Error -> {
+                            setLoading(false)
+                            Toast.makeText(
+                                requireActivity(),
+                                "error fetching the recipe data",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun generateRandom(allergies: String) {
+        lifecycleScope.launch {
+            viewModel.getRandom(allergies).observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Result.Loading -> {
-                        setLoading(true)
                     }
 
                     is Result.Success -> {
-                        setLoading(false)
-                        setupUI(result.data)
+                        val recipePreference = RecipePreference.getInstance(requireActivity())
+                        recipePreference.setRecipe(result.data)
                     }
 
-                    is Result.Error -> {
-                        setLoading(false)
+                    else -> {
                         Toast.makeText(
-                            requireActivity(),
-                            "error fetching the recipeData",
+                            requireContext(),
+                            "Something went wrong",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -80,7 +150,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupUI(data: List<ProgressItem>) {
-        val sumCalories = data.sumOf { it.calories!! }
+        var sumCalories = 0
+        if (data.isNotEmpty()) {
+            for (item in data) {
+                if (item.status == 1) {
+                    sumCalories += item.calories!!
+                }
+            }
+        } else {
+            sumCalories = 0
+        }
+
         binding.caloriesCount.text = getString(R.string.calories_count, sumCalories)
 
         if (sumCalories > 1500) {
@@ -90,7 +170,6 @@ class HomeFragment : Fragment() {
             val color = ContextCompat.getColor(requireContext(), R.color.primary)
             binding.caloriesCount.backgroundTintList = ColorStateList.valueOf(color)
         }
-        setupAdapter(data)
     }
 
     private fun setupAdapter(data: List<ProgressItem>) {

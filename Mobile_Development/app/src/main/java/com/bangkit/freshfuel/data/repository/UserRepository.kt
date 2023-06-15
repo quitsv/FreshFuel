@@ -3,7 +3,7 @@ package com.bangkit.freshfuel.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.freshfuel.data.Result
-import com.bangkit.freshfuel.data.UserPreference
+import com.bangkit.freshfuel.data.preference.UserPreference
 import com.bangkit.freshfuel.data.remote.api.ApiService
 import com.bangkit.freshfuel.model.LoginData
 import com.bangkit.freshfuel.model.request.LoginRequest

@@ -1,4 +1,4 @@
-package com.bangkit.freshfuel.data
+package com.bangkit.freshfuel.data.preference
 
 import android.content.Context
 import com.bangkit.freshfuel.model.LoginData

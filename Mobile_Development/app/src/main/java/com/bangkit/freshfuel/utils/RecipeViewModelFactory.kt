@@ -8,6 +8,7 @@ import com.bangkit.freshfuel.di.Injection
 import com.bangkit.freshfuel.view.detail.DetailViewModel
 import com.bangkit.freshfuel.view.main.ui.home.HomeViewModel
 import com.bangkit.freshfuel.view.main.ui.recipe.RecipeViewModel
+import com.bangkit.freshfuel.view.recommender.RecommenderViewModel
 
 class RecipeViewModelFactory private constructor(private val repository: RecipeRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -18,12 +19,19 @@ class RecipeViewModelFactory private constructor(private val repository: RecipeR
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(repository) as T
             }
+
+            modelClass.isAssignableFrom(RecommenderViewModel::class.java) -> {
+                RecommenderViewModel(repository) as T
+            }
+
             modelClass.isAssignableFrom(RecipeViewModel::class.java) -> {
                 RecipeViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
                 DetailViewModel(repository) as T
             }
+
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
     }

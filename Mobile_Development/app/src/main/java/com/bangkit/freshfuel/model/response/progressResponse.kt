@@ -31,6 +31,9 @@ data class ProgressItem(
 	@field:SerializedName("recipe")
 	val recipe: String? = null,
 
+	@field:SerializedName("rating")
+	val rating: Int? = null,
+
 	@field:SerializedName("calories")
 	val calories: Int? = null,
 

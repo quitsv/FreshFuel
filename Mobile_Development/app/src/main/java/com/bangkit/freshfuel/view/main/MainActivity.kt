@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.bangkit.freshfuel.R
-import com.bangkit.freshfuel.data.UserPreference
+import com.bangkit.freshfuel.data.preference.UserPreference
 import com.bangkit.freshfuel.databinding.ActivityMainBinding
 import com.bangkit.freshfuel.view.login.LoginActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
