@@ -17,6 +17,7 @@ import com.bangkit.freshfuel.R
 import com.bangkit.freshfuel.data.Result
 import com.bangkit.freshfuel.data.preference.RecipePreference
 import com.bangkit.freshfuel.databinding.FragmentHomeBinding
+import com.bangkit.freshfuel.model.request.ProgressRequest
 import com.bangkit.freshfuel.model.response.ProgressItem
 import com.bangkit.freshfuel.utils.RecipeViewModelFactory
 import com.bangkit.freshfuel.utils.adapter.ProgressAdapter
@@ -48,7 +49,6 @@ class HomeFragment : Fragment() {
 
         setupRecyclerView()
         setupUI(emptyList())
-        setupViewModel()
 
         return root
     }
@@ -105,11 +105,43 @@ class HomeFragment : Fragment() {
 
                         is Result.Success -> {
                             setLoading(false)
-                            setupUI(result.data)
-                            setupAdapter(result.data)
+                            if (result.data.isEmpty()) {
+                                generateFromLatest()
+                            } else {
+                                setupUI(result.data)
+                                setupAdapter(result.data)
+                            }
                         }
 
                         is Result.Error -> {
+                            setLoading(false)
+                            Toast.makeText(
+                                requireActivity(),
+                                "error fetching the recipe data",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun generateFromLatest() {
+        val preference = RecipePreference.getInstance(requireActivity())
+        val recipe = preference.getRecentRecipe()
+        lifecycleScope.launch {
+            viewModel.postProgress(ProgressRequest(getCurrentDateFormatted(), recipe))
+                .observe(this@HomeFragment) { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                            setLoading(true)
+                        }
+                        is Result.Success -> {
+                            setLoading(false)
+                            setupUI(result.data.progress!!)
+                            setupAdapter(result.data.progress)
+                        }
+                        else -> {
                             setLoading(false)
                             Toast.makeText(
                                 requireActivity(),

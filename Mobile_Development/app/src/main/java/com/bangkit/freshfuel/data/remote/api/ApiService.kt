@@ -60,7 +60,7 @@ interface ApiService {
     suspend fun postProgress(
         @Path("email") email: String,
         @Body newProgress: ProgressRequest
-    ): Response<HistoryResponse>
+    ): Response<ProgressResponse>
 
     @PUT("progress/user/{email}")
     suspend fun updateProgress(

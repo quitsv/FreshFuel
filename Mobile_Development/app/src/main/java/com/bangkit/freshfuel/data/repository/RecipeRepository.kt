@@ -1,5 +1,6 @@
 package com.bangkit.freshfuel.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.freshfuel.data.Result
@@ -73,7 +74,7 @@ class RecipeRepository(private val preference: UserPreference, private val apiSe
         }
     }
 
-    suspend fun postProgress(request: ProgressRequest): LiveData<Result<List<ProgressData>>> =
+    suspend fun postProgress(request: ProgressRequest): LiveData<Result<ProgressData>> =
         liveData {
             try {
                 emit(Result.Loading)
@@ -99,6 +100,7 @@ class RecipeRepository(private val preference: UserPreference, private val apiSe
                 }
             } catch (exception: Exception) {
                 emit(Result.Error(exception.message.toString()))
+                Log.e("Error", exception.message.toString())
             }
         }
 

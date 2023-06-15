@@ -152,7 +152,7 @@ class RatingActivity : AppCompatActivity() {
                                     )
                                 }
                             }
-
+                            saveRecentRecipe(recipe)
                             updateProgress(request)
                         }
 
@@ -166,6 +166,11 @@ class RatingActivity : AppCompatActivity() {
                     }
                 }
         }
+    }
+
+    private fun saveRecentRecipe(recipe: String) {
+        val preference = RecipePreference.getInstance(this)
+        preference.setRecentRecipe(recipe)
     }
 
     private fun updateProgress(request: UpdateRequest) {

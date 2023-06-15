@@ -23,6 +23,14 @@ class RecipePreference(context: Context) {
         return recipes.map { it.trim() }
     }
 
+    fun setRecentRecipe(recipe: String) {
+        preference.edit().apply {
+            putString("recent", recipe)
+        }.apply()
+    }
+
+    fun getRecentRecipe(): String? = preference.getString("recent", null)
+
     companion object {
         @Volatile
         private var INSTANCE: RecipePreference? = null
