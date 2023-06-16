@@ -22,22 +22,23 @@ Don't forget to enables all services and API that needed in APIs and Services, a
 4. `gcloud app deploy`
 
 ## Deployed App
-Node.js API: http://api.fresh-fuel.as.r.appspot.com
+Node.js API: http://api.fresh-fuel.as.r.appspot.com <br />
 Flask API: http://34.101.62.126:8080
 
 ## List of Endpoint
-POST /auth/register -> body: name, email, password, allergies
-POST /auth/login -> body: email, password
-POST /auth/logout
-
-POST /predict -> body: recipeName, rating, allergies
-GET /getRecipe?recipeName={recipe}
-GET /search?recipeName=beans
-GET /generateRandom?allergies={allergies}
-
-GET /progress/user/{email}
-GET /progress/user/{email}?date={date}
-POST /progress/user/{email} -> body: date, breakfastMenu
-PUT /progress/user/{email} -> body: date, lunchMenu, rating
-PUT /progress/user/{email} -> body: date, dinnerMenu, rating
-PUT /progress/user/{email} -> body: date, rating
+[API documentation](https://plant-minnow-530.notion.site/Documentation-API-b6cd60e7fbf642feb8a112a6f596d40c?pvs=4)<br />
+POST /auth/register -> body: name, email, password, allergies<br />
+POST /auth/login -> body: email, password<br />
+POST /auth/logout<br />
+<br />
+POST /predict -> body: recipeName, rating, allergies<br />
+GET /getRecipe?recipeName={recipe}<br />
+GET /search?recipeName=beans<br />
+GET /generateRandom?allergies={allergies}<br />
+<br />
+GET /progress/user/{email}<br />
+GET /progress/user/{email}?date={date}<br />
+POST /progress/user/{email} -> body: date, breakfastMenu<br />
+PUT /progress/user/{email} -> body: date, lunchMenu, rating<br />
+PUT /progress/user/{email} -> body: date, dinnerMenu, rating<br />
+PUT /progress/user/{email} -> body: date, rating<br />
