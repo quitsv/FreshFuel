@@ -18,7 +18,19 @@ Kalo mau run tinggal 'npm start'
 Semoga gada error T^T
 
 Untuk endpointnya:
-/auth/register -> body: name, email, password
-/auth/login -> body: email, password
-/auth/logout
+POST /auth/register -> body: name, email, password, allergies
+POST /auth/login -> body: email, password
+POST /auth/logout
+
+POST /predict -> body: recipeName, rating, allergies
+GET /getRecipe?recipeName={recipe}
+GET /search?recipeName=beans
+GET /generateRandom?allergies={allergies}
+
+GET /progress/user/{email}
+GET /progress/user/{email}?date={date}
+POST /progress/user/{email} -> body: date, breakfastMenu
+PUT /progress/user/{email} -> body: date, lunchMenu, rating
+PUT /progress/user/{email} -> body: date, dinnerMenu, rating
+PUT /progress/user/{email} -> body: date, rating
 --nanti kukirim juga file postman supaya tinggal pake--
