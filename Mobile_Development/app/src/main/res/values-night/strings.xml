@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="name">name</string>
+    <string name="login">login</string>
+    <string name="loading">loading</string>
+    <string name="username">username</string>
+    <string name="allergies">allergies</string>
+    <string name="allergies_delete">delete allergy</string>
+    <string name="allergy_item_placeholder">Allergy Item</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_food">Foods</string>
+    <string name="logout">Logout</string>
+    <string name="menu">Menu</string>
+    <string name="prompt_search">search menu</string>
+    <string name="calories">Calories</string>
+    <string name="recipe_image">recipe_image</string>
+    <string name="rating">rating</string>
+    <string name="ingredients">ingredients</string>
+    <string name="ingredient_image">ingredient image</string>
+    <string name="breakfast">breakfast</string>
+    <string name="lunch">lunch</string>
+    <string name="dinner">dinner</string>
+    <string name="greetings">Hi, %s!</string>
+    <string name="calories_count">Today calories: %d</string>
+    <string name="add_food">add new food</string>
+    <string name="select_menu">Select Menu</string>
+    <string name="recommendations">recommendations</string>
+    <string name="rate_this_recipe">rate this recipe</string>
+    <string name="prompt_rate">rate</string>
+    <string name="what_to_eat">choose what to eat next</string>
+    <string name="checked">checked</string>
+    <string name="prompt_submit">submit</string>
+</resources>
